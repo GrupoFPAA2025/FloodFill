@@ -1,7 +1,7 @@
 # 🎨 FloodFill - Colorindo Regiões de um Terreno com Obstáculos
 
 ## 👥 Equipe
-- **Guilherme Augusto Jardim de Souza** ]
+- **Guilherme Augusto Jardim de Souza** 
 - **João Pedro Mairinque de Azevedo** 
 - **Mauricio Fernandes Leite** 
 - **Sara Lourenço Iglesias** 
