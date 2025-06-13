@@ -19,28 +19,65 @@ O sistema recebe como entrada um grid bidimensional que representa um terreno, o
 
 O objetivo é identificar e colorir automaticamente todas as regiões conectadas do terreno, respeitando os obstáculos e atribuindo cores diferentes para cada região isolada.
 
-## 🔍 Algoritmo Flood Fill
+## 🔍 Funcionamento Detalhado do Algoritmo Flood Fill
 
-### Funcionamento
-O algoritmo implementado segue os seguintes passos:
+### Visão Geral
+O algoritmo Flood Fill é uma técnica de preenchimento que, a partir de um ponto inicial, "inunda" uma região conectada até encontrar bordas ou obstáculos. Em nosso projeto, ele é usado para identificar e colorir regiões navegáveis em um grid 2D.
 
+### Processo de Execução
 1. **Inicialização**:
-   - Recebe o grid bidimensional n × m
-   - Identifica a célula inicial (x, y)
-   - Prepara as estruturas de dados necessárias
+   - Recebe uma célula inicial (x, y)
+   - Verifica se a célula é válida e navegável (valor 0)
+   - Prepara uma nova cor para preenchimento (valor ≥ 2)
 
-2. **Processo de Preenchimento**:
-   - A partir da célula inicial, explora células adjacentes ortogonalmente (cima, baixo, esquerda, direita)
-   - Identifica células navegáveis (valor 0) conectadas
-   - Preenche a região com uma cor específica (valores 2+)
-   - Respeita obstáculos (valor 1) como limites
-   - Busca automaticamente a próxima região não colorida
+2. **Exploração de Células**:
+   - A partir da célula inicial, o algoritmo explora as células adjacentes nas quatro direções:
+     ```
+         ↑
+     ← (x,y) →
+         ↓
+     ```
+   - Para cada direção, verifica:
+     * Se a célula está dentro dos limites do grid
+     * Se a célula é navegável (valor 0)
+     * Se a célula ainda não foi visitada
 
-3. **Regras de Coloração**:
-   - Cada região recebe uma cor única
-   - Cores são atribuídas sequencialmente (2: vermelho, 3: laranja, etc.)
-   - Regiões já coloridas são preservadas
-   - O processo continua até que todas as células navegáveis estejam coloridas
+3. **Processo de Preenchimento**:
+   - Quando uma célula válida é encontrada:
+     * Preenche com a cor atual
+     * Adiciona à fila de células para explorar
+     * Marca como visitada
+   - O processo continua recursivamente para todas as células conectadas
+   - Para quando encontra:
+     * Obstáculos (valor 1)
+     * Células já coloridas (valor ≥ 2)
+     * Limites do grid
+
+4. **Busca de Novas Regiões**:
+   - Após preencher uma região completa:
+     * Busca a próxima célula navegável não colorida
+     * Incrementa o valor da cor
+     * Inicia novo preenchimento
+   - Continua até que todas as células navegáveis estejam coloridas
+
+### Exemplo de Execução
+```
+Grid Inicial:      Após (0,0):       Após (0,3):       Final:
+0 0 1 0 0         2 2 1 0 0         2 2 1 3 3         2 2 1 3 3
+0 1 1 0 0   →     2 1 1 0 0   →     2 1 1 3 3   →     2 1 1 3 3
+0 0 1 1 1         2 2 1 1 1         2 2 1 1 1         2 2 1 1 1
+1 1 0 0 0         1 1 0 0 0         1 1 0 0 0         1 1 4 4 4
+```
+
+### Estruturas de Dados
+- **Grid Principal**: Matriz 2D para armazenar o estado atual
+- **Fila/Pilha**: Para controlar células a serem exploradas
+- **Conjunto de Visitados**: Para evitar loops infinitos
+
+### Otimizações Implementadas
+1. **Busca Eficiente**: Uso de estruturas de dados otimizadas
+2. **Verificação Prévia**: Validação de células antes da recursão
+3. **Controle de Memória**: Gerenciamento eficiente de recursos
 
 ## 🚀 Configuração e Execução
 
